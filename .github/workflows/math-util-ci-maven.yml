@@ -1,0 +1,31 @@
+name: Math Utility Repo applying CI # name: tương đương Console.log ghi lại nhật kí chạy các lệnh
+
+on:
+  push:
+    branches: [ "main" ]   # Bất kì ai push code lên nhánh main, kho code chính
+  pull_request:
+    branches: [ "main" ]    
+
+jobs:                      # thì tự động thực thi các lệnh dưới đây
+  build:                   # build app -> .jar .war bằng cách
+
+    runs-on: ubuntu-latest # 1. Mượn 1 server bên Mỹ, cài sẵn giùm OS Ubuntu
+
+    steps:
+    - uses: actions/checkout@v3 # 2. Có server rồi, download code từ GH về server này
+    - name: Set up JDK 18       # 3. Cho mượn cái JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '18'      # 4. Khai báo version JDK ứng với file pom.xml
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven    # 5. Mượn Maven, chạy lệnh đóng gói, test luôn xanh đỏ
+      run: mvn -B package --file pom.xml
+    - name: Distribute jar-war file # Gửi file .jar .war đi đâu, CD nhảy vào ...
+      run: mkdir staging && cp target/*.jar staging # tạo thư mục staging chứa file .jar .war sau khi build      
+     
+    - name: Make hyperlink to jar-war file # Tạo hyperlink để download build 
+      uses: actions/upload-artifact@v1
+      with:
+        name: HÃY-CLICK-EM-ĐỂ-LẤY-FILE-JAR-VỀ-NHÀ-LOCAL # tạo hyperlink tới file .jar
+        path: staging
