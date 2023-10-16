@@ -1,3 +1,4 @@
+[![Math Utility Repo applying CI](https://github.com/Popun1/math-util-mvn/actions/workflows/math-util-ci-maven.yml/badge.svg)](https://github.com/Popun1/math-util-mvn/actions/workflows/math-util-ci-maven.yml)
 ### Welcome to Math Utility Reposiroty
 
 #### You will find in this repo the following stuff:
